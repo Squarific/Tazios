@@ -41,16 +41,16 @@ SQ.TazioGame.prototype.loop = function loop () {
 
 SQ.TazioGame.prototype.assetStep = function assetStep (toLoad, event) {
 	this.loadingScreen.setBar((this.maxToLoad - toLoad) / this.maxToLoad);
-	this.loadingScreen.setMessage((this.maxToLoad - toLoad) + "/" + this.maxToLoad + " images loaded");
+	this.loadingScreen.setMessage((this.maxToLoad - toLoad) + "/" + this.maxToLoad + " resources loaded");
 };
 
 SQ.TazioGame.prototype.assetError = function assetError (toLoad, event) {
 	this.loadingScreen.setBar((this.maxToLoad - toLoad) / this.maxToLoad);
-	this.loadingScreen.setMessage("Error while loading image! (" + (this.maxToLoad - toLoad) + "/" + this.maxToLoad + ")");
+	this.loadingScreen.setMessage("Error while loading resource! (" + (this.maxToLoad - toLoad) + "/" + this.maxToLoad + ")");
 };
 
 SQ.TazioGame.prototype.assetSuccess = function assetError () {
-	console.log("Images loaded, removing loadingScreen");
+	console.log("Resources loaded, removing loadingScreen");
 	setTimeout(function () {
 		this.loadingScreen.removeFromDom();
 		delete this.loadingScreen;
