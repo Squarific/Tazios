@@ -1,0 +1,33 @@
+.loadingscreen_blue_screen {
+	position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	background:rgb(0, 84, 117);
+	text-align:center;
+}
+
+.loadingscreen_blue_loadingbarcontainer {
+	display:inline-block;
+	width:60%;
+	height:20px;
+	background:rgb(53, 63, 68);
+	border:2px dashed rgb(120, 138, 139);
+	text-align:left;
+}
+
+.loadingscreen_blue_loadingbar {
+	display:inline-block;
+	height:20px;
+	background:rgb(59, 130, 158);
+	transition-duration: 0.3s;
+	-webkit-transition-duration: 0.3s;
+}
+
+.loadingscreen_blue_message {
+	display:block;
+	color:white;
+	text-shadow: 0px 0px 20px black;
+	font-size:22px;
+}

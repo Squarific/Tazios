@@ -12,7 +12,7 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 	});
 	this.maxToLoad = this.assetManager.imagesToLoad;
 
-	this.loadingScreen = new SQ.LoadingScreen("green");
+	this.loadingScreen = new SQ.LoadingScreen("blue");
 	this.loadingScreen.addToDom();
 };
 
@@ -41,7 +41,7 @@ SQ.TazioGame.prototype.loop = function loop () {
 
 SQ.TazioGame.prototype.assetStep = function assetStep (toLoad, event) {
 	this.loadingScreen.setBar((this.maxToLoad - toLoad) / this.maxToLoad);
-	this.loadingScreen.setMessage((this.maxToLoad - toLoad) + "/" + this.maxToLoad + " images loaded.");
+	this.loadingScreen.setMessage((this.maxToLoad - toLoad) + "/" + this.maxToLoad + " images loaded");
 };
 
 SQ.TazioGame.prototype.assetError = function assetError (toLoad, event) {
