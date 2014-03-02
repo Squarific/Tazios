@@ -3,14 +3,17 @@ var SQ = SQ || {};
 SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 	this.lastUpdate = Date.now();
 	this.settings = this.normalizeSettings(settings);
+
 	this.assetManager = new SQ.AssetManager({
 		assetsToLoad: this.assetsToLoad,
 		step: this.assetStep.bind(this),
 		error: this.assetError.bind(this),
 		success: this.assetSuccess.bind(this)
 	});
-	this.loadingScreen = new SQ.loadingScreen(0);
 	this.maxToLoad = this.assetManager.imagesToLoad;
+
+	this.loadingScreen = new SQ.LoadingScreen("green");
+	this.loadingScreen.addToDom();
 };
 
 /* Loop Management */
@@ -37,18 +40,20 @@ SQ.TazioGame.prototype.loop = function loop () {
 /* Asset Management */
 
 SQ.TazioGame.prototype.assetStep = function assetStep (toLoad, event) {
-	this.loadingScreen.setBar(toLoad / this.maxToLoad);
-	this.loadingScreen.setMessage(toLoad + "/" + this.maxToLoad + " images loaded.");
+	this.loadingScreen.setBar((this.maxToLoad - toLoad) / this.maxToLoad);
+	this.loadingScreen.setMessage((this.maxToLoad - toLoad) + "/" + this.maxToLoad + " images loaded.");
 };
 
 SQ.TazioGame.prototype.assetError = function assetError (toLoad, event) {
-	this.loadingScreen.setBar(toLoad / this.maxToLoad);
-	this.loadingScreen.setMessage("Error while loading image!");
+	this.loadingScreen.setBar((this.maxToLoad - toLoad) / this.maxToLoad);
+	this.loadingScreen.setMessage("Error while loading image! (" + (this.maxToLoad - toLoad) + "/" + this.maxToLoad + ")");
 };
 
 SQ.TazioGame.prototype.assetSuccess = function assetError () {
-	this.loadingScreen.destroy();
-	this.loop();
+	console.log("Images loaded, removing loadingScreen");
+	//this.loadingScreen.removeFromDom();
+	//delete this.loadingScreen;
+	//this.loop();
 };
 
 
@@ -74,7 +79,7 @@ SQ.TazioGame.prototype.defaultSettings = {
 SQ.TazioGame.prototype.assetsToLoad = {
 	images: {
 		tiles: {
-			grass: "/tiles/grass.png"
+			grass: "images/tiles/grass.png"
 		}
 	}
 };

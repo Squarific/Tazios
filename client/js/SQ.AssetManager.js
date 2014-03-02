@@ -29,6 +29,7 @@ SQ.AssetManager.prototype.getLoadCount = function getLoadCount (assets) {
 SQ.AssetManager.prototype.loadImages = function loadImages (loadTo, loadImages) {
 	for (var imageName in loadImages) {
 		if (typeof loadImages[imageName] === "object") {
+			loadTo[imageName] = {};
 			this.loadImages(loadTo[imageName], loadImages[imageName]);
 		} else {
 			loadTo[imageName] = new Image();
