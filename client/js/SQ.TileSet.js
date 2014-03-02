@@ -8,6 +8,6 @@ SQ.TileSet.prototype.addTileSet = function (image, tileWidth, tileHeight) {
 	
 };
 
-SQ.TileSet.prototype.addTile = function (image, x, y, width, height) {
+SQ.TileSet.prototype.addTile = function (number, image, x, y, width, height) {
 	
 };

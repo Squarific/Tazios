@@ -3,13 +3,17 @@ var SQ = SQ || {};
 SQ.AssetManager = function AssetManager (settings) {
 	this.settings = settings;
 	this.images = {};
+	this.data = {};
 	
 	this.settings.step = (typeof this.settings.step === "function") ? this.settings.step : function () {};
 	this.settings.success = (typeof this.settings.success === "function") ? this.settings.success : function () {};
 
 	if (this.settings.assetsToLoad) {
 		this.imagesToLoad = this.getLoadCount(this.settings.assetsToLoad.images);
+		this.jsondataToLoad = this.getLoadCount(this.settings.assetsToLoad.jsondata);
+
 		this.loadImages(this.images, this.settings.assetsToLoad.images);
+		this.loadJsondata(this.data, this.settings.assetsToLoad.jsondata);
 	}
 };
 
@@ -40,14 +44,43 @@ SQ.AssetManager.prototype.loadImages = function loadImages (loadTo, loadImages) 
 	}
 };
 
+SQ.AssetManager.prototype.loadJsondata = function loadJsondata (loadTo, loadJsondata) {
+	for (var dataName in loadJsondata) {
+		if (typeof loadJsondata[dataName] === "object") {
+			loadTo[dataName] = {};
+			this.loadJsondata(loadTo[dataName], loadJsondata[dataName]);
+		} else {
+			var request = new XMLHttpRequest();
+			request.addEventListener("readystatechange", this.readystatechangeHandler.bind(this, dataName));
+			request.open("GET", dataName);
+			request.send();
+		}
+	}
+};
+
 SQ.AssetManager.prototype.imageLoadHandler = function imageLoadHandler (event) {
 	this.imagesToLoad--;
 	this.settings.step(this.imagesToLoad, event);
-	(this.imagesToLoad === 0) ? this.settings.success() : "";
+	(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
 };
 
 SQ.AssetManager.prototype.imageErrorHandler = function imageErrorHandler (event) {
 	this.imagesToLoad--;
+	this.settings.step(this.imagesToLoad, event);
 	this.settings.error(this.imagesToLoad, event);
-	(this.imagesToLoad === 0) ? this.settings.success() : "";
+	(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
+};
+
+SQ.AssetManager.prototype.readystatechangeHandler = function readystatechangeHandler (dataName, event) {
+	if (event.target.readyState === 4) {
+		this.jsondataToLoad--;
+		if (event.target.status === 200) {
+			this.data[dataName] = JSON.parse(event.target.responseText);
+			this.settings.step(this.imagesToLoad, event);
+		} else {
+			this.settings.step(this.imagesToLoad, event);
+			this.settings.error(this.imagesToLoad, event);
+		}
+		(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
+	}
 };

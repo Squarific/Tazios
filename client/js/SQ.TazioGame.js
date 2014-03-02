@@ -51,9 +51,11 @@ SQ.TazioGame.prototype.assetError = function assetError (toLoad, event) {
 
 SQ.TazioGame.prototype.assetSuccess = function assetError () {
 	console.log("Images loaded, removing loadingScreen");
-	this.loadingScreen.removeFromDom();
-	delete this.loadingScreen;
-	this.loop();
+	setTimeout(function () {
+		this.loadingScreen.removeFromDom();
+		delete this.loadingScreen;
+		this.loop();
+	}.bind(this), 200);
 };
 
 
