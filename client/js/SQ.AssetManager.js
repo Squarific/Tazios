@@ -52,7 +52,7 @@ SQ.AssetManager.prototype.loadJsondata = function loadJsondata (loadTo, loadJson
 		} else {
 			var request = new XMLHttpRequest();
 			request.addEventListener("readystatechange", this.readystatechangeHandler.bind(this, dataName));
-			request.open("GET", dataName);
+			request.open("GET", loadJsondata[dataName]);
 			request.send();
 		}
 	}
