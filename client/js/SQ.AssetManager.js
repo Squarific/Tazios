@@ -11,6 +11,7 @@ SQ.AssetManager = function AssetManager (settings) {
 	if (this.settings.assetsToLoad) {
 		this.imagesToLoad = this.getLoadCount(this.settings.assetsToLoad.images);
 		this.jsondataToLoad = this.getLoadCount(this.settings.assetsToLoad.jsondata);
+		this.maxToLoad = this.imagesToLoad + this.jsondataToLoad;
 
 		this.loadImages(this.images, this.settings.assetsToLoad.images);
 		this.loadJsondata(this.data, this.settings.assetsToLoad.jsondata);

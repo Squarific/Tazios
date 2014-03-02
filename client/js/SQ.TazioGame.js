@@ -10,7 +10,7 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 		error: this.assetError.bind(this),
 		success: this.assetSuccess.bind(this)
 	});
-	this.maxToLoad = this.assetManager.imagesToLoad;
+	this.maxToLoad = this.assetManager.maxToLoad;
 
 	this.loadingScreen = new SQ.LoadingScreen("blue");
 	this.loadingScreen.addToDom();
