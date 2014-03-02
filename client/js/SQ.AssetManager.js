@@ -60,14 +60,14 @@ SQ.AssetManager.prototype.loadJsondata = function loadJsondata (loadTo, loadJson
 
 SQ.AssetManager.prototype.imageLoadHandler = function imageLoadHandler (event) {
 	this.imagesToLoad--;
-	this.settings.step(this.imagesToLoad, event);
+	this.settings.step(this.imagesToLoad + this.jsondataToLoad, event);
 	(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
 };
 
 SQ.AssetManager.prototype.imageErrorHandler = function imageErrorHandler (event) {
 	this.imagesToLoad--;
-	this.settings.step(this.imagesToLoad, event);
-	this.settings.error(this.imagesToLoad, event);
+	this.settings.step(this.imagesToLoad + this.jsondataToLoad, event);
+	this.settings.error(this.imagesToLoad + this.jsondataToLoad, event);
 	(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
 };
 
@@ -76,10 +76,10 @@ SQ.AssetManager.prototype.readystatechangeHandler = function readystatechangeHan
 		this.jsondataToLoad--;
 		if (event.target.status === 200) {
 			this.data[dataName] = JSON.parse(event.target.responseText);
-			this.settings.step(this.imagesToLoad, event);
+			this.settings.step(this.imagesToLoad + this.jsondataToLoad, event);
 		} else {
-			this.settings.step(this.imagesToLoad, event);
-			this.settings.error(this.imagesToLoad, event);
+			this.settings.step(this.imagesToLoad + this.jsondataToLoad, event);
+			this.settings.error(this.imagesToLoad + this.jsondataToLoad, event);
 		}
 		(this.imagesToLoad === 0 && this.jsondataToLoad === 0) ? this.settings.success() : "";
 	}
