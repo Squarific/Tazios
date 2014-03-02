@@ -2,7 +2,7 @@ var SQ = SQ || {};
 
 SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 	this.lastUpdate = Date.now();
-	this.settings = this.normalizeSettings(settings);
+	this.settings = this.normalizeSettings(settings, this.defaultSettings);
 
 	this.assetManager = new SQ.AssetManager({
 		assetsToLoad: this.assetsToLoad,
@@ -51,17 +51,19 @@ SQ.TazioGame.prototype.assetError = function assetError (toLoad, event) {
 
 SQ.TazioGame.prototype.assetSuccess = function assetError () {
 	console.log("Images loaded, removing loadingScreen");
-	//this.loadingScreen.removeFromDom();
-	//delete this.loadingScreen;
-	//this.loop();
+	this.loadingScreen.removeFromDom();
+	delete this.loadingScreen;
+	this.loop();
 };
 
 
 /* Settings */
 
 SQ.TazioGame.prototype.normalizeSettings = function normalizeSettings (settings, defaultSettings) {
+	settings = settings || {};
 	for (var setting in defaultSettings) {
 		if (defaultSettings[setting] === "object") {
+			settings[setting] = {};
 			settings[setting] = this.normalizeSettings(settings[setting], defaultSettings[setting]);
 		} else {
 			settings[setting] = (typeof settings[setting] === "undefined") ? defaultSettings[setting] : settings[setting];
@@ -79,7 +81,7 @@ SQ.TazioGame.prototype.defaultSettings = {
 SQ.TazioGame.prototype.assetsToLoad = {
 	images: {
 		tiles: {
-			grass: "images/tiles/grass.png"
+			grass: "images/terrain_atlas.png"
 		}
 	}
 };

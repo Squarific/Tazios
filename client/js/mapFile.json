@@ -1,0 +1,58 @@
+{ "height":100,
+ "layers":[],
+ "orientation":"orthogonal",
+ "properties":
+    {
+
+    },
+ "tileheight":32,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"..\/images\/backgroundTiles.png",
+         "imageheight":320,
+         "imagewidth":320,
+         "margin":0,
+         "name":"BackgroundTiles",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "firstgid":101,
+         "image":"..\/images\/walkability.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "margin":0,
+         "name":"Walkability",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "firstgid":117,
+         "image":"..\/images\/terrain_atlas.png",
+         "imageheight":1024,
+         "imagewidth":1024,
+         "margin":0,
+         "name":"terrain_atlas",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "version":1,
+ "width":100
+}
