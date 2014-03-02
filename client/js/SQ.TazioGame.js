@@ -83,6 +83,9 @@ SQ.TazioGame.prototype.assetsToLoad = {
 		tiles: {
 			grass: "images/terrain_atlas.png"
 		}
+	},
+	jsondata: {
+		mapFile: "js/mapFile.json"
 	}
 };
 
