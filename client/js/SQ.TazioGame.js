@@ -54,6 +54,10 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 	setTimeout(function () {
 		this.loadingScreen.removeFromDom();
 		delete this.loadingScreen;
+
+		this.tileSet = new SQ.TileSet();
+		this.tileSet.addTileSet(0, this.assetManager.images.tiles.terrain, 32, 32);
+
 		this.loop();
 	}.bind(this), 200);
 };
@@ -83,7 +87,7 @@ SQ.TazioGame.prototype.defaultSettings = {
 SQ.TazioGame.prototype.assetsToLoad = {
 	images: {
 		tiles: {
-			grass: "images/terrain_atlas.png"
+			terrain: "images/terrain_atlas.png"
 		}
 	},
 	jsondata: {

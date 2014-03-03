@@ -5,12 +5,12 @@ SQ.LoadingScreen = function LoadingScreen (theme) {
 	this.loadingBarContainer = this.domLoadingScreen.appendChild(document.createElement("div"));
 	this.loadingBar = this.loadingBarContainer.appendChild(document.createElement("div"));
 	this.message = this.loadingBarContainer.appendChild(document.createElement("div"));
-	
+
 	this.domLoadingScreen.classList.add("loadingscreen_" + theme + "_screen");
 	this.loadingBarContainer.classList.add("loadingscreen_" + theme + "_loadingbarcontainer");
 	this.loadingBar.classList.add("loadingscreen_" + theme + "_loadingbar");
 	this.message.classList.add("loadingscreen_" + theme + "_message");
-	
+
 	this.loadingBar.style.width = "0%";
 };
 
