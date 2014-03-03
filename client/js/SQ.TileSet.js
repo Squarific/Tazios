@@ -7,7 +7,7 @@ SQ.TileSet = function TileSet () {
 SQ.TileSet.prototype.addTileSet = function (startNumber, image, tileWidth, tileHeight) {
 	for (var x = 0; x < image.width; x += tileWidth) {
 		for (var y = 0; y < image.height; y += tileHeight) {
-			var number = startNumber + (x / tileWidth) * (image.width / tileWidth) + (y / tileHeight);
+			var number = startNumber + (x / tileWidth) + (y / tileHeight) * (image.width / tileWidth);
 			this.addTile(number, image, x, y, tileWidth, tileHeight);
 		}
 	}
