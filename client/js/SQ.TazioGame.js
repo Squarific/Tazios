@@ -4,6 +4,10 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 	this.lastUpdate = Date.now();
 	this.settings = this.normalizeSettings(settings, this.defaultSettings);
 
+	this.screen = new SQ.Screen(screenCanvas, {
+		fullScreen: true
+	});
+
 	this.assetManager = new SQ.AssetManager({
 		assetsToLoad: this.assetsToLoad,
 		step: this.assetStep.bind(this),
@@ -57,10 +61,6 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 
 		this.tileSet = new SQ.TileSet();
 		this.tileSet.addTileSet(0, this.assetManager.images.tiles.terrain, 32, 32);
-		
-		this.screen = new SQ.Screen(screenCanvas, {
-			fullScreen: true
-		});
 
 		this.loop();
 	}.bind(this), 200);
