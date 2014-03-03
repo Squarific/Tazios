@@ -7,6 +7,8 @@ SQ.Screen = function Screen (canvas, settings) {
 	
 	if (settings.fullScreen) {
 		window.addEventListener("resize", this.resizeHandler.bind(this));
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
 	}
 };
 
