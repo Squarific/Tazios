@@ -4,7 +4,7 @@ SQ.TileSet = function TileSet () {
 	this.tiles = [];
 };
 
-SQ.TileSet.prototype.addTileSet = function (startNumber, image, tileWidth, tileHeight) {
+SQ.TileSet.prototype.addTileSet = function addTileSet (startNumber, image, tileWidth, tileHeight) {
 	for (var x = 0; x < image.width; x += tileWidth) {
 		for (var y = 0; y < image.height; y += tileHeight) {
 			var number = startNumber + (x / tileWidth) + (y / tileHeight) * (image.width / tileWidth);
@@ -13,7 +13,7 @@ SQ.TileSet.prototype.addTileSet = function (startNumber, image, tileWidth, tileH
 	}
 };
 
-SQ.TileSet.prototype.addTile = function (number, image, x, y, width, height) {
+SQ.TileSet.prototype.addTile = function addTile (number, image, x, y, width, height) {
 	var ctx = this.newCtx(width, height);
 	ctx.drawImage(image, x, y, width, height, 0, 0, width, height);
 	this.tiles[number] = ctx.canvas;

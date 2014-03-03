@@ -23,7 +23,7 @@ SQ.TazioGame.prototype.update = function update () {
 };
 
 SQ.TazioGame.prototype.draw = function draw () {
-	
+	this.screen.drawLayer(0, 0, this.assetManager.data.mapFile.layers[0].data, this.assetManager.data.mapFile.layers[0].width, 32, 32, this.tileSet.tiles);
 };
 
 SQ.TazioGame.prototype.loop = function loop () {
@@ -57,6 +57,10 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 
 		this.tileSet = new SQ.TileSet();
 		this.tileSet.addTileSet(0, this.assetManager.images.tiles.terrain, 32, 32);
+		
+		this.screen = new SQ.Screen(screenCanvas, {
+			fullScreen: true
+		});
 
 		this.loop();
 	}.bind(this), 200);
