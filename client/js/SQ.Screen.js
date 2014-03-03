@@ -17,10 +17,10 @@ SQ.Screen.prototype.drawLayer = function drawLayer (startX, startY, layerdata, l
 		targetCtx = this.ctx;
 	}
 	var maxX = Math.floor((startX + targetCtx.canvas.width) / tileWidth),
-		maxY = Math.floor((startY + targetCtx.canvas.height) / tileHeight);
+		maxY = Math.ceil((startY + targetCtx.canvas.height) / tileHeight);
 	for (var x = Math.floor(startX / tileWidth); x < maxX; x++) {
 		for (var y = Math.floor(startY / tileHeight); y < maxY; y++) {
-			var tileNumber = Math.min(x, 0) + Math.min(y, 0) * layerdatawidth;
+			var tileNumber = Math.max(x, 0) + Math.max(y, 0) * layerdatawidth;
 			targetCtx.drawImage(tiles[layerdata[tileNumber]], startX + x * tileWidth, startY + y * tileHeight);
 		}
 	}

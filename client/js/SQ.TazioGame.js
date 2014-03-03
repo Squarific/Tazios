@@ -60,7 +60,7 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 		delete this.loadingScreen;
 
 		this.tileSet = new SQ.TileSet();
-		this.tileSet.addTileSet(0, this.assetManager.images.tiles.terrain, 32, 32);
+		this.tileSet.addTileSet(17, this.assetManager.images.tiles.terrain, 32, 32);
 
 		this.loop();
 	}.bind(this), 200);
