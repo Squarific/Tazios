@@ -13,9 +13,7 @@ SQ.Screen = function Screen (canvas, settings) {
 };
 
 SQ.Screen.prototype.drawLayer = function drawLayer (startX, startY, layerdata, layerdatawidth, tileWidth, tileHeight, tiles, targetCtx) {
-	if (!targetCtx) {
-		targetCtx = this.ctx;
-	}
+	targetCtx = targetCtx || this.ctx;
 	var maxX = Math.floor((startX + targetCtx.canvas.width) / tileWidth),
 		maxY = Math.ceil((startY + targetCtx.canvas.height) / tileHeight);
 	for (var x = Math.floor(startX / tileWidth); x < maxX; x++) {
@@ -27,6 +25,11 @@ SQ.Screen.prototype.drawLayer = function drawLayer (startX, startY, layerdata, l
 			targetCtx.drawImage(tiles[layerdata[tileNumber]], startX + x * tileWidth, startY + y * tileHeight);
 		}
 	}
+};
+
+SQ.Screen.prototype.drawEntitys = function drawEntitys (entityList, targetCtx) {
+	targetCtx = targetCtx || this.ctx;
+	
 };
 
 SQ.Screen.prototype.resizeHandler = function resizeHandler () {
