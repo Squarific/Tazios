@@ -18,18 +18,22 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 
 	this.loadingScreen = new SQ.LoadingScreen("blue");
 	this.loadingScreen.addToDom();
+	
+	this.inputHandler = new SQ.InputHandler();
+	this.entityManager = new SQ.EntityManager();
 };
 
 /* Loop Management */
 
-SQ.TazioGame.prototype.update = function update (deltaTime) {
-	
+SQ.TazioGame.prototype.update = function update (deltaTime, currentTime) {
+	this.entityManager.update(deltaTime, currentTime);
 };
 
 SQ.TazioGame.prototype.draw = function draw () {
 	for (var k = 0; k < this.assetManager.data.mapFile.layers.length; k++) {
 		this.screen.drawLayer(0, 0, this.assetManager.data.mapFile.layers[k].data, this.assetManager.data.mapFile.layers[k].width, 32, 32, this.tileSet.tiles);
 	}
+	this.screen.drawEntitys(this.entityManager.entitys, 0, 0);
 };
 
 SQ.TazioGame.prototype.loop = function loop () {
@@ -37,7 +41,7 @@ SQ.TazioGame.prototype.loop = function loop () {
 	while (deltaTime > this.settings.loopTime) {
 		deltaTime -= this.settings.loopTime;
 		this.lastUpdate += this.settings.loopTime;
-		this.update(this.settings.loopTime);
+		this.update(this.settings.loopTime, this.lastUpdate);
 		this.draw();
 	}
 	requestAnimationFrame(this.loop.bind(this));
@@ -64,8 +68,15 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 		this.tileSet = new SQ.TileSet();
 		this.tileSet.addTileSet(17, this.assetManager.images.tiles.terrain, 32, 32);
 
+		this.player = this.entityManager.addEntity({
+			uid: "localplayer",
+			x: 150,
+			y: 150,
+			image: this.assetManager.images.player
+		});
+
 		this.loop();
-	}.bind(this), 200);
+	}.bind(this), 300);
 };
 
 
@@ -94,7 +105,8 @@ SQ.TazioGame.prototype.assetsToLoad = {
 	images: {
 		tiles: {
 			terrain: "images/terrain_atlas.png"
-		}
+		},
+		player: "images/player.png"
 	},
 	jsondata: {
 		mapFile: "js/mapFile.json"
