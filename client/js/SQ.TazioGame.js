@@ -3,6 +3,7 @@ var SQ = SQ || {};
 SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 	this.lastUpdate = Date.now();
 	this.settings = this.normalizeSettings(settings, this.defaultSettings);
+	this.cameraOffset = {x: 0, y: 0};
 
 	this.screen = new SQ.Screen(screenCanvas, {
 		fullScreen: true
@@ -27,13 +28,15 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 
 SQ.TazioGame.prototype.update = function update (deltaTime, currentTime) {
 	this.entityManager.update(deltaTime, currentTime);
+	this.updatePlayer();
+	this.updateCameraPos();
 };
 
 SQ.TazioGame.prototype.draw = function draw () {
 	for (var k = 0; k < this.assetManager.data.mapFile.layers.length; k++) {
-		this.screen.drawLayer(0, 0, this.assetManager.data.mapFile.layers[k].data, this.assetManager.data.mapFile.layers[k].width, 32, 32, this.tileSet.tiles);
+		this.screen.drawLayer(this.cameraOffset.x, this.cameraOffset.y, this.assetManager.data.mapFile.layers[k].data, this.assetManager.data.mapFile.layers[k].width, 32, 32, this.tileSet.tiles);
 	}
-	this.screen.drawEntitys(this.entityManager.entitys, 0, 0);
+	this.screen.drawEntitys(this.entityManager.entitys, this.cameraOffset.x, this.cameraOffset.y);
 };
 
 SQ.TazioGame.prototype.loop = function loop () {
@@ -42,9 +45,29 @@ SQ.TazioGame.prototype.loop = function loop () {
 		deltaTime -= this.settings.loopTime;
 		this.lastUpdate += this.settings.loopTime;
 		this.update(this.settings.loopTime, this.lastUpdate);
-		this.draw();
 	}
+	this.draw();
 	requestAnimationFrame(this.loop.bind(this));
+};
+
+/* Camera and player update functions */
+
+SQ.TazioGame.prototype.updatePlayer = function updatePlayer () {
+	if (!this.player.moveTo) {
+		var xdir = this.inputHandler.pressedKeys["37"] ? -1 : (this.inputHandler.pressedKeys["39"]) ? 1 : 0,
+			ydir = (xdir !== 0) ? 0 : this.inputHandler.pressedKeys["38"] ? -1 : (this.inputHandler.pressedKeys["40"]) ? 1 : 0;
+		if (xdir === 0 && ydir === 0) {
+			return;
+		}
+		var x = Math.min(Math.max(Math.round((this.player.x + xdir * 32) / 32) * 32, 0), 3200),
+			y = Math.min(Math.max(Math.round((this.player.y + ydir * 32) / 32) * 32, 0), 3200);
+		this.entityManager.moveTo(this.player, x, y, 50);
+	}
+};
+
+SQ.TazioGame.prototype.updateCameraPos = function updateCameraPos () {
+	this.cameraOffset.x = Math.min(Math.max(this.player.x - (this.screen.canvas.width - 32) / 2, 0), 3200 - this.screen.canvas.width);
+	this.cameraOffset.y = Math.min(Math.max(this.player.y - (this.screen.canvas.height - 32) / 2, 0), 3200 - this.screen.canvas.height);
 };
 
 /* Asset Management */
@@ -70,8 +93,8 @@ SQ.TazioGame.prototype.assetSuccess = function assetError () {
 
 		this.player = this.entityManager.addEntity({
 			uid: "localplayer",
-			x: 150,
-			y: 150,
+			x: 256,
+			y: 256,
 			image: this.assetManager.images.player
 		});
 

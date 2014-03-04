@@ -16,12 +16,12 @@ SQ.Screen.prototype.drawLayer = function drawLayer (offsetX, offsetY, layerdata,
 	targetCtx = targetCtx || this.ctx;
 	offsetX = offsetX || 0;
 	offsetY = offsetY || 0;
-	var maxX = Math.floor((offsetX + targetCtx.canvas.width) / tileWidth),
+	var maxX = Math.ceil((offsetX + targetCtx.canvas.width) / tileWidth),
 		maxY = Math.ceil((offsetY + targetCtx.canvas.height) / tileHeight);
 	for (var x = Math.floor(offsetX / tileWidth); x < maxX; x++) {
 		for (var y = Math.floor(offsetY / tileHeight); y < maxY; y++) {
 			var tileNumber = Math.max(x, 0) + Math.max(y, 0) * layerdatawidth;
-			if (!tiles[layerdata[tileNumber]]) {
+			if (!tiles[layerdata[tileNumber]] || x > layerdatawidth) {
 				continue;
 			}
 			targetCtx.drawImage(tiles[layerdata[tileNumber]], x * tileWidth - offsetX, y * tileHeight - offsetY);
