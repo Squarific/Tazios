@@ -27,7 +27,9 @@ SQ.TazioGame.prototype.update = function update () {
 };
 
 SQ.TazioGame.prototype.draw = function draw () {
-	this.screen.drawLayer(0, 0, this.assetManager.data.mapFile.layers[0].data, this.assetManager.data.mapFile.layers[0].width, 32, 32, this.tileSet.tiles);
+	for (var k = 0; k < this.assetManager.data.mapFile.layers.length; k++) {
+		this.screen.drawLayer(0, 0, this.assetManager.data.mapFile.layers[k].data, this.assetManager.data.mapFile.layers[k].width, 32, 32, this.tileSet.tiles);
+	}
 };
 
 SQ.TazioGame.prototype.loop = function loop () {
