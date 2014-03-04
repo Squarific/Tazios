@@ -21,6 +21,9 @@ SQ.Screen.prototype.drawLayer = function drawLayer (startX, startY, layerdata, l
 	for (var x = Math.floor(startX / tileWidth); x < maxX; x++) {
 		for (var y = Math.floor(startY / tileHeight); y < maxY; y++) {
 			var tileNumber = Math.max(x, 0) + Math.max(y, 0) * layerdatawidth;
+			if (!tiles[layerdata[tileNumber]]) {
+				continue;
+			}
 			targetCtx.drawImage(tiles[layerdata[tileNumber]], startX + x * tileWidth, startY + y * tileHeight);
 		}
 	}
