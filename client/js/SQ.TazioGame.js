@@ -22,7 +22,7 @@ SQ.TazioGame = function TazioGame (screenCanvas, settings) {
 
 /* Loop Management */
 
-SQ.TazioGame.prototype.update = function update () {
+SQ.TazioGame.prototype.update = function update (deltaTime) {
 	
 };
 
@@ -37,7 +37,7 @@ SQ.TazioGame.prototype.loop = function loop () {
 	while (deltaTime > this.settings.loopTime) {
 		deltaTime -= this.settings.loopTime;
 		this.lastUpdate += this.settings.loopTime;
-		this.update();
+		this.update(this.settings.loopTime);
 		this.draw();
 	}
 	requestAnimationFrame(this.loop.bind(this));
